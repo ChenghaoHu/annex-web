@@ -57,7 +57,7 @@
 	<body>
 		<div class="subject-area">
 			<div class="login-area">
-				<form action="" method="post">
+				<form action="${request.contextPath}/tmpfile/list" method="post">
 					<#-- ftl页面脚本的相关语法可参照官网教程 -->
 					<#assign loginname="admin">
 					<#assign loginpwd="1">

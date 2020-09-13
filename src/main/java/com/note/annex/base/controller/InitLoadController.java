@@ -14,5 +14,5 @@ public class InitLoadController {
 		ModelAndView mv = new ModelAndView("/ftl/login.ftl");
 		return mv;
 	}
-	
+
 }
