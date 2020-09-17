@@ -24,6 +24,20 @@
 	</style>
 	<script src="${request.contextPath}/assets/jquery/js/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript">
+		function preview(filepath, filetype){
+			$.ajax({
+	    		type: "post",
+	    		url: "${request.contextPath}/file/getfilepage",
+	    		data: { "filepath": filepath, "filetype":filetype },
+	    		success: function (data) {
+	    			if(data && data!=""){
+	   		 			myWindow=window.open();
+	    				myWindow.document.write(data);
+	    				myWindow.focus();
+	    			}
+	    		},
+			});
+		}
 	</script>
 	<body>
 		<div class="subject-area">
@@ -35,13 +49,23 @@
 				<ul class="folder-ul">
 					<#list fileList as item>
 						<#if item.type?exists && item.type=="folder">
-							<li class="folder-li"><a href="${request.contextPath}/tmpfile/list?tmpfilepath=${item.content}">${item.content}</a><span>修改日期：${item.update}</span></li>
+							<li class="folder-li">
+							  <a href="${request.contextPath}/tmpfile/list?tmpfilepath=${item.content}">${item.content}</a>
+							  <span>修改日期：${item.update}</span>
+							</li>
 						<#elseif item.type?exists && item.type=="file">
-							<li class="folder-li"><a href="${request.contextPath}/tmpfile/getfile?tmpfilepath=${item.content}">${item.content}</a><span>修改日期：${item.update}</span></li>
+							<li class="folder-li">
+							  <a href="${request.contextPath}/tmpfile/getfile?tmpfilepath=${item.content}">${item.content}</a>
+							  <button type="button" class="btn btn-sm" onclick="preview('${item.content}','')">在线预览</button>
+							  <span>修改日期：${item.update}</span>
+							</li>
 						</#if>
 					</#list>
 				</ul>
 			</div>
+		</div>
+		<div>
+			<if
 		</div>
 	</body>
 </html>

@@ -91,8 +91,8 @@ public class AnnexUtil {
      * @param fromFileInputStream:
      * @throws IOException 
      */
-    public static String file2pdf(InputStream fromFileInputStream, String toFilePath,String type) throws Exception{
-        String timesuffix = UUID.randomUUID().toString().replaceAll("-", "");
+    public static String file2pdf(InputStream fromFileInputStream, String filename, String toFilePath,String type) throws Exception{
+        String timesuffix = filename;//UUID.randomUUID().toString().replaceAll("-", "");
         String docFileName = null;
         String htmFileName = null;
         if("doc".equals(type)){
@@ -171,8 +171,8 @@ public class AnnexUtil {
      * @return
      * @throws Exception
      */
-    public static String file2Html (InputStream fromFileInputStream, String toFilePath,String type) throws Exception{
-		String timesuffix = UUID.randomUUID().toString().replaceAll("-", "");
+    public static String file2Html (InputStream fromFileInputStream, String filename, String toFilePath, String type) throws Exception{
+		String timesuffix = filename;//UUID.randomUUID().toString().replaceAll("-", "");
         String docFileName = null;
         String htmFileName = null;
         if("doc".equals(type)){

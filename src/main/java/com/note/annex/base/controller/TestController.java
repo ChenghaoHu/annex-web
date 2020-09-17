@@ -20,6 +20,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.note.annex.common.utils.SysConfig;
 
+import jdk.nashorn.internal.runtime.JSONFunctions;
+
 @Controller
 public class TestController {
 
@@ -46,7 +48,7 @@ public class TestController {
 			if (fileList[i].isDirectory() && !fileList[i].isHidden()) {//判断是否为文件夹
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("type", "folder");
-				map.put("content", String.valueOf(fileList[i]));
+				map.put("content", String.valueOf(fileList[i].getPath()));
 				map.put("update", new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date(fileList[i].lastModified())));
 				arrayList.add(map);
 			}
@@ -55,11 +57,12 @@ public class TestController {
 			if (fileList[i].isFile()) {//判断是否为文件
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("type", "file");
-				map.put("content", String.valueOf(fileList[i]));
+				map.put("content", String.valueOf(fileList[i].getPath()));
 				map.put("update", new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date(fileList[i].lastModified())));
 				arrayList.add(map);
 			}
 		}
+		System.out.println(arrayList.toString());
 		ModelAndView mv = new ModelAndView("/ftl/tmp_filelist.ftl");
 		mv.addObject("nowFolder", nowFolder);
 		mv.addObject("fileList", arrayList);
