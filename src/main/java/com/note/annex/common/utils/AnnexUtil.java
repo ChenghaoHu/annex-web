@@ -7,243 +7,237 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
 
 import org.artofsolving.jodconverter.OfficeDocumentConverter;
 import org.artofsolving.jodconverter.office.DefaultOfficeManagerConfiguration;
 import org.artofsolving.jodconverter.office.OfficeManager;
 
-/**
- * ÎÄ¼þ×ª»»£¨Ö÷Òª½«ÎÄ¼þ×ª»¯Îªpdf»òhtml£¬Ö§³Ödoc|docx|ppt|pptx|xls|xlsxµÈÎÄ¼þµÄ×ª»»£©
- * 
- * @author hch
- */
 public class AnnexUtil {
 
 	private static OfficeManager officeManager;
-	
+
 	/**
-     * ×ª»»ÎÄ¼þÎªpdf
-     *
-     * @throws FileNotFoundException
-     * */
-    public static String openoffice4pdf(String filepath, String savepath, String type) throws Exception {
-        File inputFile = new File(filepath);
-        if (!inputFile.exists()) {
-            throw new FileNotFoundException("Òª×ª»»µÄÎÄ¼þ²»´æÔÚ£º" + filepath);
-        }
-        String filename = inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."));
-        String pdfFileName = filename + type!=null?type:DocUtil.pdfType;
-        String docFileName = filename + filepath.substring(filepath.lastIndexOf("."));
-        File toFileFolder = new File(savepath);
-        if (!toFileFolder.exists()) {
-            toFileFolder.mkdirs();//²»´æÔÚÊ±´´½¨Ä¿Â¼
-        }
-        File pdfOutputFile = new File(toFileFolder.toString() + File.separatorChar + pdfFileName);
-        File docInputFile = new File(toFileFolder.toString() + File.separatorChar + docFileName);
-        //ÓÉfromFileInputStream¿ªÊ¼¹¹½¨ÊäÈëÎÄ¼þ
-        InputStream fromFileInputStream = new FileInputStream(inputFile);
-        try {
-            OutputStream os = new FileOutputStream(docInputFile);
-            int bytesRead = 0;
-            byte[] buffer = new byte[1024 * 8];
-            while ((bytesRead = fromFileInputStream.read(buffer)) != -1) {
-                os.write(buffer, 0, bytesRead);
-            }
-            os.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally{
-            try {
-                fromFileInputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        String officehome = SysConfig.getInstance().getConfig("openoffice.installURL");
+	 * ×ªï¿½ï¿½ï¿½Ä¼ï¿½Îªpdf
+	 *
+	 * @throws FileNotFoundException
+	 * */
+	public static String openoffice4pdf(String filepath, String savepath, String type) throws Exception {
+		File inputFile = new File(filepath);
+		if (!inputFile.exists()) {
+			throw new FileNotFoundException("Òª×ªï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½" + filepath);
+		}
+		String filename = inputFile.getName().substring(0, inputFile.getName().lastIndexOf("."));
+		String pdfFileName = filename + type!=null?type:DocUtil.pdfType;
+		String docFileName = filename + filepath.substring(filepath.lastIndexOf("."));
+		File toFileFolder = new File(savepath);
+		if (!toFileFolder.exists()) {
+			toFileFolder.mkdirs();//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ä¿Â¼
+		}
+		File pdfOutputFile = new File(toFileFolder.toString() + File.separatorChar + pdfFileName);
+		File docInputFile = new File(toFileFolder.toString() + File.separatorChar + docFileName);
+		//ï¿½ï¿½fromFileInputStreamï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+		InputStream fromFileInputStream = new FileInputStream(inputFile);
+		try {
+			OutputStream os = new FileOutputStream(docInputFile);
+			int bytesRead = 0;
+			byte[] buffer = new byte[1024 * 8];
+			while ((bytesRead = fromFileInputStream.read(buffer)) != -1) {
+				os.write(buffer, 0, bytesRead);
+			}
+			os.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				fromFileInputStream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		String officehome = SysConfig.getInstance().getConfig("openoffice.installURL");
 		String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
 		String executiontimeout = SysConfig.getInstance().getConfig("openoffice.executiontimeout");
 		String queuetimeout = SysConfig.getInstance().getConfig("openoffice.queuetimeout");
 		DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
-		configuration.setOfficeHome(officehome);//ÉèÖÃOpenOffice.org°²×°Ä¿Â¼
-		configuration.setPortNumbers((openofficeport!=null)?Integer.parseInt(openofficeport):8101); //ÉèÖÃ×ª»»¶Ë¿Ú£¬Ä¬ÈÏÎª8100
-		configuration.setTaskExecutionTimeout((executiontimeout!=null)?Long.valueOf(executiontimeout):(long)(1000*60*5));// ÉèÖÃÈÎÎñÖ´ÐÐ³¬Ê±Îª5·ÖÖÓ
-		configuration.setTaskQueueTimeout((queuetimeout!=null)?Long.valueOf(queuetimeout):(long)1000*60*60*24);// ÉèÖÃÈÎÎñ¶ÓÁÐ³¬Ê±Îª24Ð¡Ê±
+		configuration.setOfficeHome(officehome);//ï¿½ï¿½ï¿½ï¿½OpenOffice.orgï¿½ï¿½×°Ä¿Â¼
+		configuration.setPortNumbers((openofficeport!=null)?Integer.parseInt(openofficeport):8101); //ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ë¿Ú£ï¿½Ä¬ï¿½ï¿½Îª8100
+		configuration.setTaskExecutionTimeout((executiontimeout!=null)?Long.valueOf(executiontimeout):(long)(1000*60*5));// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð³ï¿½Ê±Îª5ï¿½ï¿½ï¿½ï¿½
+		configuration.setTaskQueueTimeout((queuetimeout!=null)?Long.valueOf(queuetimeout):(long)1000*60*60*24);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ê±Îª24Ð¡Ê±
 		officeManager = configuration.buildOfficeManager();
-		officeManager.start(); //Æô¶¯openoffice·þÎñ
+		officeManager.start(); //ï¿½ï¿½ï¿½ï¿½openofficeï¿½ï¿½ï¿½ï¿½
 		//convert
 		OfficeDocumentConverter converter = new OfficeDocumentConverter(officeManager);
 		converter.convert(docInputFile, pdfOutputFile);
 		if (pdfOutputFile.exists()){
-			System.out.println(" ** "+docInputFile.getName()+"ÎÄ¼þ×ª»»³É¹¦");
+			System.out.println(" ** "+docInputFile.getName()+"ï¿½Ä¼ï¿½×ªï¿½ï¿½ï¿½É¹ï¿½");
 		}else {
-			System.out.println(" ** "+docInputFile.getName()+"ÎÄ¼þ×ª»»Ê§°Ü");
+			System.out.println(" ** "+docInputFile.getName()+"ï¿½Ä¼ï¿½×ªï¿½ï¿½Ê§ï¿½ï¿½");
 		}
-        //×ª»»ÍêÖ®ºóÉ¾³ýwordÎÄ¼þ
-        docInputFile.delete();
-        //tip£ºÄ¿Ç°Õâ¸ö·½·¨ÖÐxlsxÎÄ¼þÎÞ·¨×ª³Épdf¡£
-        return pdfFileName;
-    }
-    
-    /**
-     * ×ª»»ÎÄ¼þ³Épdf
-     * 
-     * @param fromFileInputStream:
-     * @throws IOException 
-     */
-    public static String file2pdf(InputStream fromFileInputStream, String filename, String toFilePath,String type) throws Exception{
-        String timesuffix = filename;//UUID.randomUUID().toString().replaceAll("-", "");
-        String docFileName = null;
-        String htmFileName = null;
-        if("doc".equals(type)){
-            docFileName = timesuffix.concat(".doc");
-            htmFileName = timesuffix.concat(".pdf");
-        }else if("docx".equals(type)){
-            docFileName = timesuffix.concat(".docx");
-            htmFileName = timesuffix.concat(".pdf");
-        }else if("xls".equals(type)){
-            docFileName = timesuffix.concat(".xls");
-            htmFileName = timesuffix.concat(".pdf");
-        }else if("xlsx".equals(type)){
-            docFileName = timesuffix.concat(".xlsx");
-            htmFileName = timesuffix.concat(".pdf");
-        }else if("ppt".equals(type)){
-            docFileName = timesuffix.concat(".ppt");
-            htmFileName = timesuffix.concat(".pdf");
-        }else if("pptx".equals(type)){
-            docFileName = timesuffix.concat(".pptx");
-            htmFileName = timesuffix.concat(".pdf");
-        }else if("txt".equals(type)){
-            docFileName = timesuffix.concat(".txt");
-            htmFileName = timesuffix.concat(".pdf");
-        }else{
-        	return null;
-        }
-        File htmlOutputFile = new File(toFilePath + File.separatorChar + htmFileName);
-        File docInputFile = new File(toFilePath + File.separatorChar + docFileName);
-        if (htmlOutputFile.exists()){
-        	htmlOutputFile.delete();
-        }
-		htmlOutputFile.createNewFile();
-        docInputFile.createNewFile();
-        /**
-         * ÓÉfromFileInputStream¹¹½¨ÊäÈëÎÄ¼þ
-         */
-        int bytesRead = 0;
-        byte[] buffer = new byte[1024];
-    	OutputStream os = new FileOutputStream(docInputFile);
-		while ((bytesRead = fromFileInputStream.read(buffer)) != -1) {
-		    os.write(buffer, 0, bytesRead);
-		}
-		os.close();
-        fromFileInputStream.close();
-        //String openofficepost = SysConfig.getInstance().getConfig("openoffice.host");
-		//String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
-        //OpenOfficeConnection connection = new SocketOpenOfficeConnection(openofficepost,(openofficeport!=null)?Integer.valueOf(openofficeport):8100);
-		//connection.connect();
-        //convert
-        //DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
-        //connection.disconnect();
-        String officehome = SysConfig.getInstance().getConfig("openoffice.installURL");
-		String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
-		String executiontimeout = SysConfig.getInstance().getConfig("openoffice.executiontimeout");
-		String queuetimeout = SysConfig.getInstance().getConfig("openoffice.queuetimeout");
-		DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
-		configuration.setOfficeHome(officehome);//ÉèÖÃOpenOffice.org°²×°Ä¿Â¼
-		configuration.setPortNumbers((openofficeport!=null)?Integer.parseInt(openofficeport):8101); //ÉèÖÃ×ª»»¶Ë¿Ú£¬Ä¬ÈÏÎª8100
-		configuration.setTaskExecutionTimeout((executiontimeout!=null)?Long.valueOf(executiontimeout):(long)(1000*60*5));// ÉèÖÃÈÎÎñÖ´ÐÐ³¬Ê±Îª5·ÖÖÓ
-		configuration.setTaskQueueTimeout((queuetimeout!=null)?Long.valueOf(queuetimeout):(long)1000*60*60*24);// ÉèÖÃÈÎÎñ¶ÓÁÐ³¬Ê±Îª24Ð¡Ê±
-		officeManager = configuration.buildOfficeManager();
-		officeManager.start(); //Æô¶¯openoffice·þÎñ
-		// convert
-		OfficeDocumentConverter converter = new OfficeDocumentConverter(officeManager);
-        converter.convert(docInputFile, htmlOutputFile);
-        // ×ª»»ÍêÖ®ºóÉ¾³ýwordÎÄ¼þ
-        docInputFile.delete();
-        return htmFileName;
-    }
-    
-    /**
-     * ÎÄ¼þ×ª»»³ÉHtml
-     * @param fromFileInputStream
-     * @param toFilePath
-     * @param type
-     * @return
-     * @throws Exception
-     */
-    public static String file2Html (InputStream fromFileInputStream, String filename, String toFilePath, String type) throws Exception{
+		//×ªï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½É¾ï¿½ï¿½wordï¿½Ä¼ï¿½
+		docInputFile.delete();
+		//tipï¿½ï¿½Ä¿Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xlsxï¿½Ä¼ï¿½ï¿½Þ·ï¿½×ªï¿½ï¿½pdfï¿½ï¿½
+		return pdfFileName;
+	}
+
+	/**
+	 * ×ªï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½pdf
+	 * 
+	 * @param fromFileInputStream:
+	 * @throws IOException 
+	 */
+	public static String file2pdf(InputStream fromFileInputStream, String filename, String toFilePath,String type) throws Exception{
 		String timesuffix = filename;//UUID.randomUUID().toString().replaceAll("-", "");
-        String docFileName = null;
-        String htmFileName = null;
-        if("doc".equals(type)){
-            docFileName = timesuffix.concat(".doc");
-            htmFileName = timesuffix.concat(".html");
-        }else if("docx".equals(type)){
-            docFileName = timesuffix.concat(".docx");
-            htmFileName = timesuffix.concat(".html");
-        }else if("xls".equals(type)){
-            docFileName = timesuffix.concat(".xls");
-            htmFileName = timesuffix.concat(".html");
-        }else if("xlsx".equals(type)){
-            docFileName = timesuffix.concat(".xlsx");
-            htmFileName = timesuffix.concat(".html");
-        }else if("ppt".equals(type)){
-            docFileName = timesuffix.concat(".ppt");
-            htmFileName = timesuffix.concat(".html");
-        }else if("pptx".equals(type)){
-            docFileName = timesuffix.concat(".pptx");
-            htmFileName = timesuffix.concat(".html");
-        }else if("txt".equals(type)){
-            docFileName = timesuffix.concat(".txt");
-            htmFileName = timesuffix.concat(".html");
-        }else if("pdf".equals(type)){
-        	docFileName = timesuffix.concat(".pdf");
-			htmFileName = timesuffix.concat(".html");
-        }else{
-        	return null;
-        }
+		String docFileName = null;
+		String htmFileName = null;
+		if("doc".equals(type)){
+			docFileName = timesuffix.concat(".doc");
+			htmFileName = timesuffix.concat(".pdf");
+		}else if("docx".equals(type)){
+			docFileName = timesuffix.concat(".docx");
+			htmFileName = timesuffix.concat(".pdf");
+		}else if("xls".equals(type)){
+			docFileName = timesuffix.concat(".xls");
+			htmFileName = timesuffix.concat(".pdf");
+		}else if("xlsx".equals(type)){
+			docFileName = timesuffix.concat(".xlsx");
+			htmFileName = timesuffix.concat(".pdf");
+		}else if("ppt".equals(type)){
+			docFileName = timesuffix.concat(".ppt");
+			htmFileName = timesuffix.concat(".pdf");
+		}else if("pptx".equals(type)){
+			docFileName = timesuffix.concat(".pptx");
+			htmFileName = timesuffix.concat(".pdf");
+		}else if("txt".equals(type)){
+			docFileName = timesuffix.concat(".txt");
+			htmFileName = timesuffix.concat(".pdf");
+		}else{
+			return null;
+		}
 		File htmlOutputFile = new File(toFilePath + File.separatorChar + htmFileName);
-        File docInputFile = new File(toFilePath + File.separatorChar + docFileName);
-        if (htmlOutputFile.exists()){
-        	htmlOutputFile.delete();
-        }
+		File docInputFile = new File(toFilePath + File.separatorChar + docFileName);
+		if (htmlOutputFile.exists()){
+			htmlOutputFile.delete();
+		}
 		htmlOutputFile.createNewFile();
-        docInputFile.createNewFile();
-        /**
-         * ÓÉfromFileInputStream¹¹½¨ÊäÈëÎÄ¼þ
-         */
-        int bytesRead = 0;
-        byte[] buffer = new byte[1024 * 8];
-    	OutputStream os = new FileOutputStream(docInputFile);
+		docInputFile.createNewFile();
+		/**
+		 * ï¿½ï¿½fromFileInputStreamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+		 */
+		int bytesRead = 0;
+		byte[] buffer = new byte[1024];
+		OutputStream os = new FileOutputStream(docInputFile);
 		while ((bytesRead = fromFileInputStream.read(buffer)) != -1) {
-		    os.write(buffer, 0, bytesRead);
+			os.write(buffer, 0, bytesRead);
 		}
 		os.close();
-        fromFileInputStream.close();
-        //String FS_FILE_CONVERT_HOST = SysConfig.getInstance().getConfig("openoffice.host");
+		fromFileInputStream.close();
+		//String openofficepost = SysConfig.getInstance().getConfig("openoffice.host");
 		//String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
-        //OpenOfficeConnection connection = new SocketOpenOfficeConnection(FS_FILE_CONVERT_HOST,(openofficeport!=null)?Integer.valueOf(openofficeport):8100);
+		//OpenOfficeConnection connection = new SocketOpenOfficeConnection(openofficepost,(openofficeport!=null)?Integer.valueOf(openofficeport):8100);
 		//connection.connect();
-        // convert
-        //DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
-        //connection.disconnect();
-        String officehome = SysConfig.getInstance().getConfig("openoffice.installURL");
+		//convert
+		//DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
+		//connection.disconnect();
+		String officehome = SysConfig.getInstance().getConfig("openoffice.installURL");
 		String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
 		String executiontimeout = SysConfig.getInstance().getConfig("openoffice.executiontimeout");
 		String queuetimeout = SysConfig.getInstance().getConfig("openoffice.queuetimeout");
 		DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
-		configuration.setOfficeHome(officehome);//ÉèÖÃOpenOffice.org°²×°Ä¿Â¼
-		configuration.setPortNumbers((openofficeport!=null)?Integer.parseInt(openofficeport):8101); //ÉèÖÃ×ª»»¶Ë¿Ú£¬Ä¬ÈÏÎª8100
-		configuration.setTaskExecutionTimeout((executiontimeout!=null)?Long.valueOf(executiontimeout):(long)(1000*60*5));// ÉèÖÃÈÎÎñÖ´ÐÐ³¬Ê±Îª5·ÖÖÓ
-		configuration.setTaskQueueTimeout((queuetimeout!=null)?Long.valueOf(queuetimeout):(long)1000*60*60*24);// ÉèÖÃÈÎÎñ¶ÓÁÐ³¬Ê±Îª24Ð¡Ê±
+		configuration.setOfficeHome(officehome);//ï¿½ï¿½ï¿½ï¿½OpenOffice.orgï¿½ï¿½×°Ä¿Â¼
+		configuration.setPortNumbers((openofficeport!=null)?Integer.parseInt(openofficeport):8101); //ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ë¿Ú£ï¿½Ä¬ï¿½ï¿½Îª8100
+		configuration.setTaskExecutionTimeout((executiontimeout!=null)?Long.valueOf(executiontimeout):(long)(1000*60*5));// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð³ï¿½Ê±Îª5ï¿½ï¿½ï¿½ï¿½
+		configuration.setTaskQueueTimeout((queuetimeout!=null)?Long.valueOf(queuetimeout):(long)1000*60*60*24);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ê±Îª24Ð¡Ê±
 		officeManager = configuration.buildOfficeManager();
-		officeManager.start(); //Æô¶¯openoffice·þÎñ
+		officeManager.start(); //ï¿½ï¿½ï¿½ï¿½openofficeï¿½ï¿½ï¿½ï¿½
 		// convert
 		OfficeDocumentConverter converter = new OfficeDocumentConverter(officeManager);
-        converter.convert(docInputFile, htmlOutputFile);
-        // ×ª»»ÍêÖ®ºóÉ¾³ýwordÎÄ¼þ
-        docInputFile.delete();
-        return htmFileName;
+		converter.convert(docInputFile, htmlOutputFile);
+		// ×ªï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½É¾ï¿½ï¿½wordï¿½Ä¼ï¿½
+		docInputFile.delete();
+		return htmFileName;
+	}
+
+	/**
+	 * ï¿½Ä¼ï¿½×ªï¿½ï¿½ï¿½ï¿½Html
+	 * @param fromFileInputStream
+	 * @param toFilePath
+	 * @param type
+	 * @return
+	 * @throws Exception
+	 */
+	public static String file2Html (InputStream fromFileInputStream, String filename, String toFilePath, String type) throws Exception{
+		String timesuffix = filename;//UUID.randomUUID().toString().replaceAll("-", "");
+		String docFileName = null;
+		String htmFileName = null;
+		if("doc".equals(type)){
+			docFileName = timesuffix.concat(".doc");
+			htmFileName = timesuffix.concat(".html");
+		}else if("docx".equals(type)){
+			docFileName = timesuffix.concat(".docx");
+			htmFileName = timesuffix.concat(".html");
+		}else if("xls".equals(type)){
+			docFileName = timesuffix.concat(".xls");
+			htmFileName = timesuffix.concat(".html");
+		}else if("xlsx".equals(type)){
+			docFileName = timesuffix.concat(".xlsx");
+			htmFileName = timesuffix.concat(".html");
+		}else if("ppt".equals(type)){
+			docFileName = timesuffix.concat(".ppt");
+			htmFileName = timesuffix.concat(".html");
+		}else if("pptx".equals(type)){
+			docFileName = timesuffix.concat(".pptx");
+			htmFileName = timesuffix.concat(".html");
+		}else if("txt".equals(type)){
+			docFileName = timesuffix.concat(".txt");
+			htmFileName = timesuffix.concat(".html");
+		}else if("pdf".equals(type)){
+			docFileName = timesuffix.concat(".pdf");
+			htmFileName = timesuffix.concat(".html");
+		}else{
+			return null;
+		}
+		File htmlOutputFile = new File(toFilePath + File.separatorChar + htmFileName);
+		File docInputFile = new File(toFilePath + File.separatorChar + docFileName);
+		if (htmlOutputFile.exists()){
+			htmlOutputFile.delete();
+		}
+		htmlOutputFile.createNewFile();
+		docInputFile.createNewFile();
+		/**
+		 * ï¿½ï¿½fromFileInputStreamï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+		 */
+		int bytesRead = 0;
+		byte[] buffer = new byte[1024 * 8];
+		OutputStream os = new FileOutputStream(docInputFile);
+		while ((bytesRead = fromFileInputStream.read(buffer)) != -1) {
+			os.write(buffer, 0, bytesRead);
+		}
+		os.close();
+		fromFileInputStream.close();
+		//String FS_FILE_CONVERT_HOST = SysConfig.getInstance().getConfig("openoffice.host");
+		//String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
+		//OpenOfficeConnection connection = new SocketOpenOfficeConnection(FS_FILE_CONVERT_HOST,(openofficeport!=null)?Integer.valueOf(openofficeport):8100);
+		//connection.connect();
+		// convert
+		//DocumentConverter converter = new StreamOpenOfficeDocumentConverter(connection);
+		//connection.disconnect();
+		String officehome = SysConfig.getInstance().getConfig("openoffice.installURL");
+		String openofficeport = SysConfig.getInstance().getConfig("openoffice.port");
+		String executiontimeout = SysConfig.getInstance().getConfig("openoffice.executiontimeout");
+		String queuetimeout = SysConfig.getInstance().getConfig("openoffice.queuetimeout");
+		DefaultOfficeManagerConfiguration configuration = new DefaultOfficeManagerConfiguration();
+		configuration.setOfficeHome(officehome);//ï¿½ï¿½ï¿½ï¿½OpenOffice.orgï¿½ï¿½×°Ä¿Â¼
+		configuration.setPortNumbers((openofficeport!=null)?Integer.parseInt(openofficeport):8101); //ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ë¿Ú£ï¿½Ä¬ï¿½ï¿½Îª8100
+		configuration.setTaskExecutionTimeout((executiontimeout!=null)?Long.valueOf(executiontimeout):(long)(1000*60*5));// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½Ð³ï¿½Ê±Îª5ï¿½ï¿½ï¿½ï¿½
+		configuration.setTaskQueueTimeout((queuetimeout!=null)?Long.valueOf(queuetimeout):(long)1000*60*60*24);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð³ï¿½Ê±Îª24Ð¡Ê±
+		officeManager = configuration.buildOfficeManager();
+		officeManager.start(); //ï¿½ï¿½ï¿½ï¿½openofficeï¿½ï¿½ï¿½ï¿½
+		// convert
+		OfficeDocumentConverter converter = new OfficeDocumentConverter(officeManager);
+		converter.convert(docInputFile, htmlOutputFile);
+		// ×ªï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½É¾ï¿½ï¿½wordï¿½Ä¼ï¿½
+		docInputFile.delete();
+		return htmFileName;
 	}	
 
 }

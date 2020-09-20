@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>ϵͳ��¼</title>
+		<title>系统登录</title>
 	</head>
 	<style type="text/css">
 	body{ margin:0 auto; }
@@ -58,13 +58,13 @@
 		<div class="subject-area">
 			<div class="login-area">
 				<form action="${request.contextPath}/tmpfile/list" method="post">
-					<#-- ftlҳ��ű�������﷨�ɲ��չ����̳� -->
+					<#-- ftl页面脚本的相关语法可参照官网教程 -->
 					<#assign loginname="admin">
 					<#assign loginpwd="1">
-					<center>��������ϵͳ</center>
-					<input type="text" class="" id="loginname" name="loginname" value="${loginname}" placeholder="�������¼����"/>
-					<input type="password" class="" id="loginpwd" name="loginpwd" value="${loginpwd}" placeholder="�������¼����"/>
-					<button type="submit" class="">��¼</button>
+					<center>附件管理系统</center>
+					<input type="text" class="" id="loginname" name="loginname" value="${loginname}" placeholder="请输入登录名称"/>
+					<input type="password" class="" id="loginpwd" name="loginpwd" value="${loginpwd}" placeholder="请输入登录密码"/>
+					<button type="submit" class="">登录</button>
 				</form>
 			</div>
 		</div>

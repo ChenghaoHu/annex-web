@@ -20,8 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.note.annex.common.utils.SysConfig;
 
-import jdk.nashorn.internal.runtime.JSONFunctions;
-
 @Controller
 public class TestController {
 
@@ -43,19 +41,38 @@ public class TestController {
 		}
 		File file = new File(tmpfilepath);
 		File[] fileList = file.listFiles();
+		String[] strings = file.list();
 		List<Map<String, String>> arrayList = new ArrayList<Map<String, String>>();
 		for (int i = 0; i < fileList.length; i++) {
-			if (fileList[i].isDirectory() && !fileList[i].isHidden()) {//判断是否为文件夹
+			if (fileList[i].isDirectory() && !fileList[i].isHidden()) {
 				Map<String, String> map = new HashMap<String, String>();
+				for(String str : strings) {
+					if(str!=null && fileList[i].getPath().indexOf(str)!=-1) {
+						map.put("filename", str);
+						break;
+					}
+				}
+				if(map.get("filename")==null) {
+					map.put("filename", "");
+				}
 				map.put("type", "folder");
-				map.put("content", String.valueOf(fileList[i].getPath()));
+				map.put("content", fileList[i].getPath());
 				map.put("update", new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date(fileList[i].lastModified())));
 				arrayList.add(map);
 			}
 		}
 		for (int i = 0; i < fileList.length; i++) {
-			if (fileList[i].isFile()) {//判断是否为文件
+			if (fileList[i].isFile()) {
 				Map<String, String> map = new HashMap<String, String>();
+				for(String str : strings) {
+					if(str!=null && fileList[i].getPath().indexOf(str)!=-1) {
+						map.put("filename", str);
+						break;
+					}
+				}
+				if(map.get("filename")==null) {
+					map.put("filename", "");
+				}
 				map.put("type", "file");
 				map.put("content", String.valueOf(fileList[i].getPath()));
 				map.put("update", new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date(fileList[i].lastModified())));

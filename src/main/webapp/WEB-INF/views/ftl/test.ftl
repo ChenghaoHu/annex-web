@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>ftlÎÄ¼şÊÓÍ¼²âÊÔ</title>
+		<title>ftlæ–‡ä»¶è§†å›¾æµ‹è¯•</title>
 	</head>
 	<body>
 		<div>hello world! test</div>

@@ -5,9 +5,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * 读取configs.properties配置文件相关内容
+ * 璇诲彇configs.properties鐩稿叧閰嶇疆
  * 
- * @author hch
+ * @author chenghao
  */
 @SuppressWarnings("serial")
 public final class SysConfig extends Properties {

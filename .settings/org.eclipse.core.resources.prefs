@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/note/annex/module/filepreview/dao/FileDao.java=UTF-8
+encoding//src/main/java/com/note/annex/module/filepreview/dao/impl/FileDaoImpl.java=UTF-8
+encoding//src/main/java/com/note/annex/module/filepreview/service/impl/DownloadNetFileServiceImpl.java=UTF-8
+encoding//src/main/webapp/WEB-INF/views/ftl/login.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/views/ftl/test.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/views/ftl/tmp_filelist.ftl=UTF-8
+encoding//src/main/webapp/WEB-INF/views/html/test.html=UTF-8
+encoding//src/main/webapp/WEB-INF/views/jsp/test.jsp=UTF-8
+encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/test/java/test/TestMain.java=UTF-8

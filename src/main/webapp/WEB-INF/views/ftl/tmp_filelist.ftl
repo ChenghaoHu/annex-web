@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>ÁÙÊ±¸½¼şÁĞ±í</title>
+		<title>ä¸´æ—¶é™„ä»¶åˆ—è¡¨</title>
 	</head>
 	<style type="text/css">
 	.subject-area .folder-area .folder-ul {
@@ -24,11 +24,11 @@
 	</style>
 	<script src="${request.contextPath}/assets/jquery/js/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript">
-		function preview(filepath, filetype){
+		function preview(filepath, filename, filetype){
 			$.ajax({
 	    		type: "post",
 	    		url: "${request.contextPath}/file/getfilepage",
-	    		data: { "filepath": filepath, "filetype":filetype },
+	    		data: { "filepath":filepath, "filename":filename, "filetype":filetype },
 	    		success: function (data) {
 	    			if(data && data!=""){
 	   		 			myWindow=window.open(window.location.href);
@@ -43,21 +43,21 @@
 		<div class="subject-area">
 			<div class="folder-area">
 				<#if history_back?exists && history_back!="">
-					<button type="button" onclick="window.history.back(-1);">·µ»ØÉÏÒ»²½</button>
+					<button type="button" onclick="window.history.back(-1);">è¿”å›ä¸Šä¸€æ­¥</button>
 				</#if>
-				<h2>ÎÄ¼şËùÔÚ´ÅÅÌÎ»ÖÃ£º${nowFolder}</h2>
+				<h2>æ–‡ä»¶æ‰€åœ¨ç£ç›˜ä½ç½®ï¼š${nowFolder}</h2>
 				<ul class="folder-ul">
 					<#list fileList as item>
 						<#if item.type?exists && item.type=="folder">
 							<li class="folder-li">
 							  <a href="${request.contextPath}/tmpfile/list?tmpfilepath=${item.content}">${item.content}</a>
-							  <span>ĞŞ¸ÄÈÕÆÚ£º${item.update}</span>
+							  <span>ä¿®æ”¹æ—¥æœŸï¼š${item.update}</span>
 							</li>
 						<#elseif item.type?exists && item.type=="file">
 							<li class="folder-li">
 							  <a href="${request.contextPath}/tmpfile/getfile?tmpfilepath=${item.content}">${item.content}</a>
-							  <button type="button" class="btn btn-sm" onclick="preview('${item.content}','')">ÔÚÏßÔ¤ÀÀ</button>
-							  <span>ĞŞ¸ÄÈÕÆÚ£º${item.update}</span>
+							  <button type="button" class="btn btn-sm" onclick="preview('${item.content}','${item.filename}','')">åœ¨çº¿é¢„è§ˆ</button>
+							  <span>ä¿®æ”¹æ—¥æœŸï¼š${item.update}</span>
 							</li>
 						</#if>
 					</#list>
@@ -65,7 +65,6 @@
 			</div>
 		</div>
 		<div>
-			<if
 		</div>
 	</body>
 </html>

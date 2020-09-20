@@ -5,19 +5,18 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 import com.note.annex.common.utils.AnnexUtil;
-import com.note.annex.common.utils.SysConfig;
 
 public class TestMain {
 
 	public static void main(String[] args) throws Exception {
-		InputStream fromFileInputStream = new FileInputStream(new File("d:\\20200817ÖĞÕ®Î¬»¤Ïà¹ØÎÊÌâÍ³¼Æ.xlsx"));
+		InputStream fromFileInputStream = new FileInputStream(new File("d:\\20200817ä¸­å€ºç»´æŠ¤ç›¸å…³é—®é¢˜ç»Ÿè®¡.xlsx"));
     	try {
 			AnnexUtil.file2Html(fromFileInputStream, "123123", "D:\\temp_file", "xlsx");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    	/*File file = new File(SysConfig.getInstance().getConfig("file.uploadURL"));//FileÀàĞÍ¿ÉÒÔÊÇÎÄ¼şÒ²¿ÉÒÔÊÇÎÄ¼ş¼Ğ
-		File[] fileList = file.listFiles();//½«¸ÃÄ¿Â¼ÏÂµÄËùÓĞÎÄ¼ş·ÅÖÃÔÚÒ»¸öFileÀàĞÍµÄÊı×éÖĞ
+    	/*File file = new File(SysConfig.getInstance().getConfig("file.uploadURL"));//Fileç±»å‹å¯ä»¥æ˜¯æ–‡ä»¶ä¹Ÿå¯ä»¥æ˜¯æ–‡ä»¶å¤¹
+		File[] fileList = file.listFiles();//å°†è¯¥ç›®å½•ä¸‹çš„æ‰€æœ‰æ–‡ä»¶æ”¾ç½®åœ¨ä¸€ä¸ªFileç±»å‹çš„æ•°ç»„ä¸­
 		for (int i = 0; i < fileList.length; i++) {
 			System.out.println(fileList[i]);
 		}*/

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,22 +22,27 @@ public class FileController {
 
 	@RequestMapping("/getfilepage")
 	public @ResponseBody void index(HttpServletRequest request, HttpServletResponse response, String filepath, String filetype) {
-		//ÎÄ¼ş×ª»»ÎªÁÙÊ±µÄhtmlÎÄ¼şstart
 		System.out.println(filepath);
 		File file = new File(filepath);
 		if(file.exists()) {
 			try {
-				if(filetype==null || "".equals(filetype)) {
-					filetype = filepath.substring(filepath.lastIndexOf(".")+1);
+				String filename = request.getParameter("filename");
+				if(filename!=null && !"".equals(filename)) {
+					if(filetype==null || "".equals(filetype)) {
+						filetype = filename.substring(filename.lastIndexOf(".")+1);
+					}
+				}else {
+					if(filetype==null || "".equals(filetype)) {
+						filetype = filepath.substring(filepath.lastIndexOf(".")+1);
+					}
 				}
 				System.out.println(filetype);
 				String tempsavepath = SysConfig.getInstance().getConfig("file.tmpURL");
 				InputStream fromFileInputStream = new FileInputStream(file);
-				AnnexUtil.file2Html(fromFileInputStream, "123preview", tempsavepath, filetype);
+				String htmFileName = AnnexUtil.file2Html(fromFileInputStream, filename.substring(0,filename.lastIndexOf(".")), tempsavepath, filetype);
 
-				//»ñÈ¡ÎÄ¼şµØÖ·
-				String lookurl = tempsavepath + "/"+"123preview.html";
-				//Í¨¹ıname¶ÁÈ¡ÎÄ¼ş
+				//String lookurl = tempsavepath + "/"+"tempfile001.html";
+				String lookurl = tempsavepath + "/"+ htmFileName;
 				File lookfile = new File(lookurl);
 				BufferedReader reader = null;
 				StringBuffer sbf = new StringBuffer();
@@ -55,6 +59,8 @@ public class FileController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else {
+			System.out.println("æ–‡ä»¶åŠç›®å½•ä¸å­˜åœ¨ã€‚ filepath : "+filepath);
 		}
 		//end
 	}
