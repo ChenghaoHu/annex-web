@@ -31,7 +31,7 @@
 	    		data: { "filepath": filepath, "filetype":filetype },
 	    		success: function (data) {
 	    			if(data && data!=""){
-	   		 			myWindow=window.open();
+	   		 			myWindow=window.open(window.location.href);
 	    				myWindow.document.write(data);
 	    				myWindow.focus();
 	    			}
